@@ -665,6 +665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2811d46045fc62141b6afaab312a6298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileManager
+  tileCoordinate: {x: 0, y: 0, z: 0}
+  OwnerID: 0
 --- !u!1 &1439385945
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62be7b6afe8d7b245869d06a480c437f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  GridSize: {x: 5, y: 0, z: 5}
+  GridSize: {x: 10, y: 0, z: 10}
   TilePrefab: {fileID: 6283122352007164715, guid: 8e00150461c46ca418e469f50990ffd3, type: 3}
   GridContainer: {fileID: 457344168}
   CellSize: 1.2
@@ -868,15 +870,10 @@ MonoBehaviour:
   - {fileID: 2105323419}
   - {fileID: 553116771}
   - {fileID: 1439385949}
-  MaterialAvailable:
-  - Name: Default
-    Material: {fileID: 2100000, guid: 6f9c4a4ce2cd8d84f839b1b84160e682, type: 2}
-  - Name: Player1
-    Material: {fileID: 2100000, guid: d5ea6aa047549434198ce5095bbe58d7, type: 2}
-  - Name: Player2
-    Material: {fileID: 2100000, guid: c210cad20c1436147b093bc7b1958195, type: 2}
-  - Name: Fog
-    Material: {fileID: 2100000, guid: ef5c549ec728d3d418555db6491375ae, type: 2}
+  DefaultMat: {fileID: 2100000, guid: 6f9c4a4ce2cd8d84f839b1b84160e682, type: 2}
+  Player1Mat: {fileID: 2100000, guid: d5ea6aa047549434198ce5095bbe58d7, type: 2}
+  Player2Mat: {fileID: 2100000, guid: c210cad20c1436147b093bc7b1958195, type: 2}
+  FogMat: {fileID: 2100000, guid: ef5c549ec728d3d418555db6491375ae, type: 2}
 --- !u!1 &1853322423
 GameObject:
   m_ObjectHideFlags: 0
