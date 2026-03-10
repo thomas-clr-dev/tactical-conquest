@@ -29,46 +29,12 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<string, Material> _materialDict;
 
-    private void Awake()
-    {
-        //_materialDict = new Dictionary<string, Material>();
-        //foreach (var entry in MaterialAvailable)
-        //{
-        //    if (!string.IsNullOrEmpty(entry.Name) && entry.Material != null)
-        //    {
-        //        _materialDict[entry.Name] = entry.Material;
-        //    }
-        //}
-    }
-
     private void Start()
     {
-        //if (GetMaterialByName("Default") != null)
-        //{
-        //    DefaultMat = GetMaterialByName("Default");
-        //}
-        //else
-        //{
-        //    DefaultMat = MaterialAvailable[0].Material;
-        //}
-
-        //if (GetMaterialByName("Player1") != null)
-        //{
-        //    Player1Mat = GetMaterialByName("Player1");
-        //}
-        //else
-        //{
-        //    Player1Mat = MaterialAvailable[1].Material;
-        //}
 
         ServiceLocator.Get<IGridService>().GenerateGrid(GridSize, TilePrefab, GridContainer, CellSize, DefaultMat);
         ServiceLocator.Get<IGridService>().SetPlayersHC(GridSize, CellSize, Player1Mat, Player2Mat);
         ServiceLocator.Get<ICameraService>().SetCameraPositionFromGrid(GridSize, CellSize, CameraAvailable);
         ServiceLocator.Get<ICameraService>().RandomizeCameraSelection(CameraAvailable);
     }
-
-    //public Material GetMaterialByName(string name)
-    //{
-    //    return _materialDict.TryGetValue(name, out Material mat) ? mat : null;
-    //}
 }

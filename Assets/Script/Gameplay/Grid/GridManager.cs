@@ -19,8 +19,7 @@ public class GridManager : MonoBehaviour, IGridService
                     Vector3Int TileCoordinate = new Vector3Int(x, 0, y);
                     TileDictionary.Add(TileCoordinate, newTile);
 
-                    Renderer newTileRenderer = newTile.GetComponent<Renderer>();
-                    ServiceLocator.Get<ITileService>().SetTile(newTile, defaultMat, newTileRenderer);
+                    ServiceLocator.Get<ITileService>().SetTile(defaultMat);
                 }
             }
             Utils.ColorLog("Grid generation success !", "Green");
@@ -60,15 +59,15 @@ public class GridManager : MonoBehaviour, IGridService
             }
         }
 
-        Utils.ColorLog($"Position HC P1 : {HCPlayer1}", "Cyan");
-        Utils.ColorLog($"Position HC P2 : {HCPlayer2}", "Red");
+        //Utils.ColorLog($"Position HC P1 : {HCPlayer1}", "Cyan");
+        //Utils.ColorLog($"Position HC P2 : {HCPlayer2}", "Red");
 
-        GameObject TileHCPlayer1 = GetTileAt(HCPlayer1);
-        Renderer Player1TileRenderer = TileHCPlayer1.GetComponent<Renderer>();
-        ServiceLocator.Get<ITileService>().SetTile(TileHCPlayer1, Player1Mat, Player1TileRenderer);
+        //GameObject TileHCPlayer1 = GetTileAt(HCPlayer1);
+        //Renderer Player1TileRenderer = TileHCPlayer1.GetComponent<Renderer>();
+        //ServiceLocator.Get<ITileService>().SetTile(TileHCPlayer1, Player1Mat, Player1TileRenderer);
 
-        GameObject TileHCPlayer2 = GetTileAt(HCPlayer2);
-        Renderer Player2TileRenderer = TileHCPlayer2.GetComponent<Renderer>();
-        ServiceLocator.Get<ITileService>().SetTile(TileHCPlayer2 , Player2Mat, Player2TileRenderer);
+        //GameObject TileHCPlayer2 = GetTileAt(HCPlayer2);
+        //Renderer Player2TileRenderer = TileHCPlayer2.GetComponent<Renderer>();
+        //ServiceLocator.Get<ITileService>().SetTile(TileHCPlayer2 , Player2Mat, Player2TileRenderer);
     }
 }

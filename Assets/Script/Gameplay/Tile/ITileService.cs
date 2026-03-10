@@ -2,5 +2,9 @@ using UnityEngine;
 
 public interface ITileService
 {
-    public void SetTile(GameObject Tile, Material material, Renderer TileRenderer);
+    public Vector3Int GetTile();
+
+    public void SetTile(Material material);
+
+
 }

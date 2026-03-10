@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8023338308275524613}
   - component: {fileID: 2006948138153060598}
   - component: {fileID: 7075431613409271855}
+  - component: {fileID: -3401358189162383540}
   m_Layer: 0
   m_Name: TilePrefab
   m_TagString: Untagged
@@ -112,3 +113,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3401358189162383540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283122352007164715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb887949ad5100440bfb47b236ea339c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TileView
+  OwnerID: 0
