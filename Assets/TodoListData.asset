@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09d86c3f0166c4489b853f4d801c4c5, type: 3}
+  m_Name: TodoListData
+  m_EditorClassIdentifier: Assembly-CSharp::TodoListData
+  items:
+  - id: b89fad05-9a9e-497e-a66f-5f2451b705db
+    title: "G\xE9n\xE9ration de grille"
+    description: "G\xE9n\xE9rer une grille avec taille modulable\n"
+    isCompleted: 1
+    priority: 1
+    category: 0
+    createdDate: 10/03/2026 14:21
+    dueDate: 
+  - id: d49233d5-6793-4f60-9685-f8878dbd86a6
+    title: "Cr\xE9er prefab de tuile"
+    description: "avec un mat par d\xE9faut (sand)"
+    isCompleted: 1
+    priority: 2
+    category: 5
+    createdDate: 10/03/2026 14:22
+    dueDate: 
+  - id: b56419b5-a6c1-4589-bf67-68dab71732df
+    title: "Cr\xE9er le camera manager"
+    description: "Pour g\xE9rer le placement par d\xE9faut des cam\nG\xE9rer la selection
+      al\xE9atoire de deux cameras\nactiver les camera selectionner et garder les
+      autres d\xE9sactiver"
+    isCompleted: 0
+    priority: 1
+    category: 2
+    createdDate: 10/03/2026 14:23
+    dueDate: 
+  - id: 136fbb0a-1467-4909-a175-d554292ffbab
+    title: "Cr\xE9er le turn service/manager"
+    description: "g\xE9rer les tour selon le joueur"
+    isCompleted: 0
+    priority: 1
+    category: 2
+    createdDate: 10/03/2026 14:25
+    dueDate: 
+  - id: f6cd4a8d-e903-406a-9e76-8bb0808b613c
+    title: "Cr\xE9er un tileManager"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: 0
+    createdDate: 10/03/2026 16:05
+    dueDate: 
+  - id: 11887efd-d8d7-4c8f-bb3f-1babfb9f4697
+    title: "Cr\xE9er ITileManagerService"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: 0
+    createdDate: 10/03/2026 16:06
+    dueDate: 
+  - id: cdcfa878-accb-4983-9853-98c18fa71ead
+    title: "Cr\xE9er Tile et l'ajouter sur le prefab"
+    description: 
+    isCompleted: 0
+    priority: 1
+    category: 0
+    createdDate: 10/03/2026 16:06
+    dueDate: 

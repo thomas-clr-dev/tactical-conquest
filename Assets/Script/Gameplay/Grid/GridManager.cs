@@ -1,0 +1,41 @@
+using UnityEngine;
+using System.Collections.Generic;
+using System;
+
+public class GridManager : MonoBehaviour, IServiceMB, IGridManagerService
+{
+    [Header("Grid Configuration")]
+    private int[,] _gridSize;
+    [SerializeField] private float CellSize = 1.1f;
+    [SerializeField] private int _gridLengthX = 10;
+    [SerializeField] private int _gridLengthY = 10;
+
+    private void Awake()
+    {
+        Register();
+        _gridSize = new int[_gridLengthX, _gridLengthY];
+    }
+
+    public void Register()
+    {
+        ServiceLocator.Register<IGridManagerService>(this);
+    }
+
+    public void Unregister()
+    {
+        ServiceLocator.Unregister<IGridManagerService>(this);
+    }
+
+    public void GenerateGrid()
+    {
+        for (int x = 0; x < _gridSize.GetLength(0); x++)
+        {
+            for (int y = 0; y < _gridSize.GetLength(1); y++)
+            {
+                int[,] tileCoordinate = new int[x, y];
+                Utils.ColorLog($"Case_{x}_{y}");
+                ServiceLocator.Get<ITileManagerService>().CreateTile(tileCoordinate, CellSize);
+            }
+        }
+    }
+}
