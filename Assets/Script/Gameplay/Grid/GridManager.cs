@@ -32,10 +32,10 @@ public class GridManager : MonoBehaviour, IServiceMB, IGridManagerService
         {
             for (int y = 0; y < _gridSize.GetLength(1); y++)
             {
-                int[,] tileCoordinate = new int[x, y];
-                Utils.ColorLog($"Case_{x}_{y}");
-                ServiceLocator.Get<ITileManagerService>().CreateTile(tileCoordinate, CellSize);
+                ServiceLocator.Get<ITileManagerService>().CreateTile(x, y, CellSize);
             }
         }
+        ServiceLocator.Get<ITileManagerService>().SetPlayerBase(_gridLengthX, _gridLengthY, CellSize);
+        ServiceLocator.Get<ICameraManagerService>().SetCameraPositionFromGrid(_gridLengthX, _gridLengthX, CellSize);
     }
 }

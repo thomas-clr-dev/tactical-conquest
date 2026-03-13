@@ -9,65 +9,64 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a09d86c3f0166c4489b853f4d801c4c5, type: 3}
+  m_Script: {fileID: 11500000, guid: daa599be15673734e9bb5f0c5ec278d1, type: 3}
   m_Name: TodoListData
-  m_EditorClassIdentifier: Assembly-CSharp::TodoListData
+  m_EditorClassIdentifier: Aehenginn.Vhrtztodolist::TodoListData
   items:
-  - id: b89fad05-9a9e-497e-a66f-5f2451b705db
-    title: "G\xE9n\xE9ration de grille"
-    description: "G\xE9n\xE9rer une grille avec taille modulable\n"
+  - id: 384e8e50-5150-45b6-a5f6-9ef64e3ce96b
+    title: OnTurnChange
+    description: "Faire que les ile du joueur actuel s'affiche dans la bonne couleur
+      et masqu\xE9 \ncelle du joueur adverse (le mettre dans la couleur par d\xE9faut)\n"
     isCompleted: 1
     priority: 1
-    category: 0
-    createdDate: 10/03/2026 14:21
+    category: Bug
+    collaborator: "Non assign\xE9"
+    createdDate: 12/03/2026 13:05
     dueDate: 
-  - id: d49233d5-6793-4f60-9685-f8878dbd86a6
-    title: "Cr\xE9er prefab de tuile"
-    description: "avec un mat par d\xE9faut (sand)"
-    isCompleted: 1
-    priority: 2
-    category: 5
-    createdDate: 10/03/2026 14:22
-    dueDate: 
-  - id: b56419b5-a6c1-4589-bf67-68dab71732df
-    title: "Cr\xE9er le camera manager"
-    description: "Pour g\xE9rer le placement par d\xE9faut des cam\nG\xE9rer la selection
-      al\xE9atoire de deux cameras\nactiver les camera selectionner et garder les
-      autres d\xE9sactiver"
-    isCompleted: 0
-    priority: 1
-    category: 2
-    createdDate: 10/03/2026 14:23
-    dueDate: 
-  - id: 136fbb0a-1467-4909-a175-d554292ffbab
-    title: "Cr\xE9er le turn service/manager"
-    description: "g\xE9rer les tour selon le joueur"
-    isCompleted: 0
-    priority: 1
-    category: 2
-    createdDate: 10/03/2026 14:25
-    dueDate: 
-  - id: f6cd4a8d-e903-406a-9e76-8bb0808b613c
-    title: "Cr\xE9er un tileManager"
+  - id: b41decef-146a-4e42-899b-4c2802df9d72
+    title: "Cr\xE9er les datas pour les unit\xE9"
     description: 
     isCompleted: 1
     priority: 1
-    category: 0
-    createdDate: 10/03/2026 16:05
+    category: General
+    collaborator: Thomas
+    createdDate: 12/03/2026 13:27
     dueDate: 
-  - id: 11887efd-d8d7-4c8f-bb3f-1babfb9f4697
-    title: "Cr\xE9er ITileManagerService"
-    description: 
-    isCompleted: 1
-    priority: 1
-    category: 0
-    createdDate: 10/03/2026 16:06
-    dueDate: 
-  - id: cdcfa878-accb-4983-9853-98c18fa71ead
-    title: "Cr\xE9er Tile et l'ajouter sur le prefab"
+  - id: a0b999ad-3a45-4fb9-81a4-92f37ddd5cb3
+    title: "Cr\xE9er un Unitmanager et son service"
     description: 
     isCompleted: 0
     priority: 1
-    category: 0
-    createdDate: 10/03/2026 16:06
+    category: General
+    collaborator: Thomas
+    createdDate: 12/03/2026 13:28
     dueDate: 
+  - id: ca3dfafe-781e-4e23-80ab-f00ada045ea1
+    title: APPRENDRE LES SO
+    description: 
+    isCompleted: 1
+    priority: 3
+    category: Bug
+    collaborator: Thomas
+    createdDate: 13/03/2026 14:57
+    dueDate: 
+  collaborators:
+  - "Non assign\xE9"
+  - Thomas
+  categoryDataList:
+  - name: General
+    color: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  - name: Bug
+    color: {r: 1, g: 0.3, b: 0.3, a: 1}
+  - name: Feature
+    color: {r: 0.3, g: 0.8, b: 0.3, a: 1}
+  - name: Optimization
+    color: {r: 1, g: 0.8, b: 0.2, a: 1}
+  - name: Documentation
+    color: {r: 0.6, g: 0.6, b: 1, a: 1}
+  - name: Art
+    color: {r: 1, g: 0.5, b: 0.8, a: 1}
+  - name: Audio
+    color: {r: 0.8, g: 0.3, b: 1, a: 1}
+  - name: Design
+    color: {r: 0.3, g: 0.9, b: 0.9, a: 1}
