@@ -1,74 +1,41 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
-public class GridManager : MonoBehaviour, IGridService
+public class GridManager : MonoBehaviour, IServiceMB, IGridManagerService
 {
-    private Dictionary<Vector3Int, GameObject> TileDictionary = new Dictionary<Vector3Int, GameObject>();
-    public void GenerateGrid(Vector3Int GridSize, GameObject TilePrefab, Transform GridContainer, float CellSize, Material defaultMat)
+    [Header("Grid Configuration")]
+    private int[,] _gridSize;
+    [SerializeField] private float CellSize = 1.1f;
+    [SerializeField] private int _gridLengthX = 10;
+    [SerializeField] private int _gridLengthY = 10;
+
+    private void Awake()
     {
-        if (GridContainer != null && TilePrefab != null)
-        {
-            for (int x = 0; x < GridSize.x; x++)
-            {
-                for (int y = 0; y < GridSize.z; y++)
-                {
-                    Vector3 tilePosition = new Vector3(x * CellSize, 0, y * CellSize);
-                    GameObject newTile = Instantiate(TilePrefab, tilePosition, Quaternion.identity, GridContainer);
-                    newTile.name = $"Tile_{x}_{y}";
-
-                    Vector3Int TileCoordinate = new Vector3Int(x, 0, y);
-                    TileDictionary.Add(TileCoordinate, newTile);
-
-                    Renderer newTileRenderer = newTile.GetComponent<Renderer>();
-                    ServiceLocator.Get<ITileService>().SetTile(newTile, defaultMat, newTileRenderer);
-                }
-            }
-            Utils.ColorLog("Grid generation success !", "Green");
-        }
+        Register();
+        _gridSize = new int[_gridLengthX, _gridLengthY];
     }
 
-    public GameObject GetTileAt(Vector3Int coordinate)
+    public void Register()
     {
-        if (TileDictionary.TryGetValue(coordinate, out GameObject tile))
-        {
-            return tile; 
-        }
-        return null;
+        ServiceLocator.Register<IGridManagerService>(this);
     }
 
-    public void SetPlayersHC(Vector3Int GridSize, float CellSize, Material Player1Mat, Material Player2Mat)
+    public void Unregister()
     {
-        int MidXGridSize = Mathf.RoundToInt((GridSize.x * CellSize) / 2);
-        int MidZGridSize = Mathf.RoundToInt((GridSize.z * CellSize) / 2);
+        ServiceLocator.Unregister<IGridManagerService>(this);
+    }
 
-        Vector3Int HCPlayer1 = new Vector3Int(Random.Range(0, GridSize.x), 0, Random.Range(0, GridSize.z));
-        Vector3Int HCPlayer2 = new Vector3Int(Random.Range(0, GridSize.x), 0, Random.Range(0, GridSize.z));
-
-
-        if (Mathf.Abs(HCPlayer1.x - HCPlayer2.x) < MidXGridSize)
+    public void GenerateGrid()
+    {
+        for (int x = 0; x < _gridSize.GetLength(0); x++)
         {
-            while (Mathf.Abs(HCPlayer1.x - HCPlayer2.x) < MidXGridSize)
+            for (int y = 0; y < _gridSize.GetLength(1); y++)
             {
-                HCPlayer1.x = Random.Range(0, GridSize.x);
+                ServiceLocator.Get<ITileManagerService>().CreateTile(x, y, CellSize);
             }
         }
-        else if (Mathf.Abs(HCPlayer1.z - HCPlayer2.z) < MidZGridSize)
-        {
-            while (Mathf.Abs(HCPlayer1.z - HCPlayer2.z) < MidZGridSize)
-            {
-                HCPlayer1.z = Random.Range(0, GridSize.z);
-            }
-        }
-
-        Utils.ColorLog($"Position HC P1 : {HCPlayer1}", "Cyan");
-        Utils.ColorLog($"Position HC P2 : {HCPlayer2}", "Red");
-
-        GameObject TileHCPlayer1 = GetTileAt(HCPlayer1);
-        Renderer Player1TileRenderer = TileHCPlayer1.GetComponent<Renderer>();
-        ServiceLocator.Get<ITileService>().SetTile(TileHCPlayer1, Player1Mat, Player1TileRenderer);
-
-        GameObject TileHCPlayer2 = GetTileAt(HCPlayer2);
-        Renderer Player2TileRenderer = TileHCPlayer2.GetComponent<Renderer>();
-        ServiceLocator.Get<ITileService>().SetTile(TileHCPlayer2 , Player2Mat, Player2TileRenderer);
+        ServiceLocator.Get<ITileManagerService>().SetPlayerBase(_gridLengthX, _gridLengthY, CellSize);
+        ServiceLocator.Get<ICameraManagerService>().SetCameraPositionFromGrid(_gridLengthX, _gridLengthX, CellSize);
     }
 }

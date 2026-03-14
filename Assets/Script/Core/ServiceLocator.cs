@@ -10,7 +10,7 @@ public static class ServiceLocator
     {
         Type interfaceType = typeof(TInterface);
         services[interfaceType] = serviceInstance;
-        Debug.Log($"Service {interfaceType.Name} enregistré");
+        Debug.Log($"Service {interfaceType.Name} enregistrï¿½");
     }
 
     public static TInterface Get<TInterface>()
@@ -22,7 +22,7 @@ public static class ServiceLocator
             return (TInterface)services[interfaceType];
         }
 
-        Debug.LogError($"Service {interfaceType.Name} non trouvé !");
+        Debug.LogError($"Service {interfaceType.Name} non trouvï¿½ !");
         return default(TInterface);
     }
 

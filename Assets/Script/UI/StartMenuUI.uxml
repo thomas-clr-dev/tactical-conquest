@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(32, 32, 32); align-items: center; justify-content: center; align-self: auto;">
+        <ui:GroupBox name="MenuBox" style="background-color: rgb(30, 34, 64); padding-left: 5px; padding-right: 5px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; width: 35%; height: auto; align-items: center; justify-content: center; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(0, 16, 141); border-right-color: rgb(0, 16, 141); border-top-color: rgb(0, 16, 141); border-bottom-color: rgb(0, 16, 141);">
+            <ui:Label text="Tactical Conquest" name="GameName" style="color: rgb(255, 255, 255); -unity-font-style: bold;"/>
+            <ui:GroupBox name="BtnBox" style="align-items: center; justify-content: center; flex-direction: row;">
+                <ui:Button text="Start" name="StartGameBtn" style="background-color: rgb(50, 104, 52); color: rgb(255, 255, 255); -unity-font-style: bold; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border-left-color: rgb(18, 199, 9); border-right-color: rgb(18, 199, 9); border-top-color: rgb(18, 199, 9); border-bottom-color: rgb(18, 199, 9); font-size: 12px;"/>
+                <ui:Button text="Quit" name="QuitGameBtn" style="background-color: rgb(104, 52, 50); color: rgb(255, 255, 255); -unity-font-style: bold; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border-left-color: rgb(199, 17, 9); border-right-color: rgb(199, 17, 9); border-top-color: rgb(199, 17, 9); border-bottom-color: rgb(199, 17, 9); font-size: 12px;"/>
+            </ui:GroupBox>
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,74 +1,26 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using UnityEngine;
 
-[Serializable]
-public class MaterialEntry
+public class GameManager : MonoBehaviour, IServiceMB, IGameManagerReadService
 {
-    public string Name;
-    public Material Material;
-}
-
-public class GameManager : MonoBehaviour
-{
-    [Header("Grid Configuration")]
-    [SerializeField] public Vector3Int GridSize = new Vector3Int(10, 0, 10);
-    [SerializeField] public GameObject TilePrefab;
-    [SerializeField] public Transform GridContainer;
-    [Min(1f)][SerializeField] public float CellSize = 1.2f;
-
-    [Header("Cameras Configuration")]
-    [SerializeField] public List<Camera> CameraAvailable;
-
-    [Header("Tile Configuration")]
-    //[SerializeField] public List<MaterialEntry> MaterialAvailable;
-    [SerializeField] public Material DefaultMat;
-    [SerializeField] public Material Player1Mat;
-    [SerializeField] public Material Player2Mat;
-    [SerializeField] public Material FogMat;
-
-    private Dictionary<string, Material> _materialDict;
-
     private void Awake()
     {
-        //_materialDict = new Dictionary<string, Material>();
-        //foreach (var entry in MaterialAvailable)
-        //{
-        //    if (!string.IsNullOrEmpty(entry.Name) && entry.Material != null)
-        //    {
-        //        _materialDict[entry.Name] = entry.Material;
-        //    }
-        //}
+        Register();
+    }
+
+    public void Register()
+    {
+        ServiceLocator.Register<IGameManagerReadService>(this);
+    }
+
+    public void Unregister()
+    {
+        ServiceLocator.Unregister<IGameManagerReadService>(this);
     }
 
     private void Start()
     {
-        //if (GetMaterialByName("Default") != null)
-        //{
-        //    DefaultMat = GetMaterialByName("Default");
-        //}
-        //else
-        //{
-        //    DefaultMat = MaterialAvailable[0].Material;
-        //}
-
-        //if (GetMaterialByName("Player1") != null)
-        //{
-        //    Player1Mat = GetMaterialByName("Player1");
-        //}
-        //else
-        //{
-        //    Player1Mat = MaterialAvailable[1].Material;
-        //}
-
-        ServiceLocator.Get<IGridService>().GenerateGrid(GridSize, TilePrefab, GridContainer, CellSize, DefaultMat);
-        ServiceLocator.Get<IGridService>().SetPlayersHC(GridSize, CellSize, Player1Mat, Player2Mat);
-        ServiceLocator.Get<ICameraService>().SetCameraPositionFromGrid(GridSize, CellSize, CameraAvailable);
-        ServiceLocator.Get<ICameraService>().RandomizeCameraSelection(CameraAvailable);
+        ServiceLocator.Get<IGridManagerService>().GenerateGrid();
     }
 
-    //public Material GetMaterialByName(string name)
-    //{
-    //    return _materialDict.TryGetValue(name, out Material mat) ? mat : null;
-    //}
 }
