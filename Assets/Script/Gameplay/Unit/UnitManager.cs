@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
@@ -15,5 +16,15 @@ public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
     private void Awake()
     {
         Register();
+    }
+
+    private void Start()
+    {
+        ServiceLocator.Get<ITileManagerService>().OnBaseGenerated += OnTroopsGeneration;
+    }
+
+    private void OnTroopsGeneration()
+    {
+
     }
 }

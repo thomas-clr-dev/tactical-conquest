@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
     private ITurnManagerService _iTurnManagerService;
 
     private Dictionary<TileView, Vector3> m_TileDictionary = new Dictionary<TileView, Vector3>();
+
+    public event Action OnBaseGenerated;
 
     private void Awake()
     {
@@ -56,19 +59,19 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         int halfGridLengthX = Mathf.RoundToInt((gridLengthX * cellSize)) / 2;
         int halfGridLengthY = Mathf.RoundToInt((gridLengthY * cellSize)) / 2;
 
-        int basePlayer1X = Random.Range(0, gridLengthX);
-        int basePlayer1Y = Random.Range(0, gridLengthY);
-        int basePlayer2X = Random.Range(0, gridLengthX);
-        int basePlayer2Y = Random.Range(0, gridLengthY);
+        int basePlayer1X = UnityEngine.Random.Range(0, gridLengthX);
+        int basePlayer1Y = UnityEngine.Random.Range(0, gridLengthY);
+        int basePlayer2X = UnityEngine.Random.Range(0, gridLengthX);
+        int basePlayer2Y = UnityEngine.Random.Range(0, gridLengthY);
 
         while (Mathf.Abs(basePlayer1X - basePlayer2X) < halfGridLengthX / cellSize)
         {
-            basePlayer1X = Random.Range(0, gridLengthX);
+            basePlayer1X = UnityEngine.Random.Range(0, gridLengthX);
         }
 
         while (Mathf.Abs(basePlayer2Y - basePlayer1Y) < halfGridLengthY / cellSize)
         {
-            basePlayer1Y = Random.Range(0, gridLengthY);
+            basePlayer1Y = UnityEngine.Random.Range(0, gridLengthY);
         }
 
         Vector3 basePlayer1 = new Vector3(basePlayer1X * cellSize, 0, basePlayer1Y * cellSize);
@@ -93,6 +96,8 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
             TileOwner tileOwner = tile.GetTileOwner();
             Utils.ColorLog($"Owner : {tileOwner}", "Green");
         }
+
+        OnBaseGenerated?.Invoke();
     }
 
     private void ChangeTileVisibility()
@@ -102,7 +107,6 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         switch (_iTurnManagerService.CurrentPlayerID)
         {
             case 0:
-                
                 break;
             case 1:
                 List<TileView> Notplayer1TilesList = m_TileDictionary.Keys.Where(tile => (int)tile.Owner != currentPlayer).ToList();
