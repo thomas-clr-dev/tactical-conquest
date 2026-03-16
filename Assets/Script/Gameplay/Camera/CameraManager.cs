@@ -29,8 +29,10 @@ public class CameraManager : MonoBehaviour, IServiceMB,  ICameraManagerService
         int Cam1Key = Random.Range(0, _availableCamera.Count);
         int Cam2Key = Random.Range(0, _availableCamera.Count);
 
-        while (Cam1Key == Cam2Key)
+        int whileFlag = 0;
+        while (Cam1Key == Cam2Key || whileFlag < 10)
         {
+            whileFlag++;
             Cam2Key = Random.Range(0, _availableCamera.Count);
         }
 

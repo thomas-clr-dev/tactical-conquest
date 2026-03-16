@@ -23,8 +23,15 @@ public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
         ServiceLocator.Get<ITileManagerService>().OnBaseGenerated += OnTroopsGeneration;
     }
 
-    private void OnTroopsGeneration()
+    private void OnTroopsGeneration(int playerId)
     {
-
+        if (playerId == 1)
+        {
+            Utils.ColorLog("Player 1 unit génération ...", "Cyan");
+        }
+        else if (playerId == 2)
+        {
+            Utils.ColorLog("Player 2 unit génération ...", "Purple");
+        }
     }
 }

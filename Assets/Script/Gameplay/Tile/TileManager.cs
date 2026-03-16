@@ -16,7 +16,7 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
     private Dictionary<TileView, Vector3> m_TileDictionary = new Dictionary<TileView, Vector3>();
 
-    public event Action OnBaseGenerated;
+    public event Action<int> OnBaseGenerated;
 
     private void Awake()
     {
@@ -64,13 +64,17 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         int basePlayer2X = UnityEngine.Random.Range(0, gridLengthX);
         int basePlayer2Y = UnityEngine.Random.Range(0, gridLengthY);
 
-        while (Mathf.Abs(basePlayer1X - basePlayer2X) < halfGridLengthX / cellSize)
+        int whileFlag = 0;
+
+        while (Mathf.Abs(basePlayer1X - basePlayer2X) < halfGridLengthX / cellSize || whileFlag < 10)
         {
+            whileFlag ++;
             basePlayer1X = UnityEngine.Random.Range(0, gridLengthX);
         }
 
-        while (Mathf.Abs(basePlayer2Y - basePlayer1Y) < halfGridLengthY / cellSize)
+        while (Mathf.Abs(basePlayer2Y - basePlayer1Y) < halfGridLengthY / cellSize || whileFlag < 10)
         {
+            whileFlag++;
             basePlayer1Y = UnityEngine.Random.Range(0, gridLengthY);
         }
 
@@ -81,6 +85,7 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         if (tilePlayer1 != null)
         {
             tilePlayer1.SetTile(_player1Mat, TileOwner.Player1);
+            OnBaseGenerated?.Invoke(1);
         }
         else Utils.ErrorLog("Tile P1 not found !");
 
@@ -88,6 +93,7 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         if (tilePlayer2 != null)
         {
             tilePlayer2.SetTile(_player2Mat, TileOwner.Player2);
+            OnBaseGenerated?.Invoke(2);
         }
         else Utils.ErrorLog("Tile P2 not found !");
 
@@ -96,8 +102,6 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
             TileOwner tileOwner = tile.GetTileOwner();
             Utils.ColorLog($"Owner : {tileOwner}", "Green");
         }
-
-        OnBaseGenerated?.Invoke();
     }
 
     private void ChangeTileVisibility()

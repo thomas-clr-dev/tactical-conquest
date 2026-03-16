@@ -7,5 +7,5 @@ public interface ITileManagerService
 
     public void SetPlayerBase(int gridLengthX, int gridLengthY, float cellSize);
 
-    public event Action OnBaseGenerated;
+    public event Action<int> OnBaseGenerated;
 }
