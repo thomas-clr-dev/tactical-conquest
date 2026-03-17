@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
 {
+    private ITileManagerService _tileManagerService;
+
     public void Register()
     {
         ServiceLocator.Register<IUnitManagerService>(this);
@@ -13,14 +15,20 @@ public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
         ServiceLocator.Unregister<IUnitManagerService>(this);
     }
 
-    private void Awake()
-    {
-        Register();
-    }
-
     private void Start()
     {
-        ServiceLocator.Get<ITileManagerService>().OnBaseGenerated += OnTroopsGeneration;
+        BootstrapManager.OnGameReady += OnGameReady;
+    }
+
+    private void OnGameReady()
+    {
+        _tileManagerService = ServiceLocator.Get<ITileManagerService>();
+
+        if (_tileManagerService != null)
+        {
+            _tileManagerService.OnBaseGenerated += OnTroopsGeneration;
+            Utils.ColorLog("UnitManager: Subscribed to OnBaseGenerated", "Green");
+        }
     }
 
     private void OnTroopsGeneration(int playerId)
@@ -34,4 +42,17 @@ public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
             Utils.ColorLog("Player 2 unit génération ...", "Purple");
         }
     }
+
+    private void OnDestroy()
+    {
+        BootstrapManager.OnGameReady -= OnGameReady;
+
+        if (_tileManagerService != null)
+        {
+            _tileManagerService.OnBaseGenerated -= OnTroopsGeneration;
+        }
+
+        Unregister();
+    }
+
 }

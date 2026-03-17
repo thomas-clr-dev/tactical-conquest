@@ -18,18 +18,27 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
     public event Action<int> OnBaseGenerated;
 
-    private void Awake()
-    {
-        Register();
-    }
-
     private void Start()
     {
-        _iTurnManagerService = ServiceLocator.Get<ITurnManagerService>();
-        _iTurnManagerService.OnTurnChanged += ChangeTileVisibility;
-        ChangeTileVisibility();
+        BootstrapManager.OnGameReady += OnGameReady;
     }
 
+    private void OnGameReady()
+    {
+        _iTurnManagerService = ServiceLocator.Get<ITurnManagerService>();
+
+        if (_iTurnManagerService != null)
+        {
+            _iTurnManagerService.OnTurnChanged += ChangeTileVisibility;
+            ChangeTileVisibility();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        BootstrapManager.OnGameReady -= OnGameReady;
+        Unregister();
+    }
 
     public void Register()
     {
@@ -65,14 +74,17 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         int basePlayer2Y = UnityEngine.Random.Range(0, gridLengthY);
 
         int whileFlag = 0;
+        int maxAttempt = 100;
 
-        while (Mathf.Abs(basePlayer1X - basePlayer2X) < halfGridLengthX / cellSize || whileFlag < 10)
+        while (Mathf.Abs(basePlayer1X - basePlayer2X) < halfGridLengthX / cellSize && whileFlag < maxAttempt)
         {
             whileFlag ++;
             basePlayer1X = UnityEngine.Random.Range(0, gridLengthX);
         }
 
-        while (Mathf.Abs(basePlayer2Y - basePlayer1Y) < halfGridLengthY / cellSize || whileFlag < 10)
+        whileFlag = 0;
+
+        while (Mathf.Abs(basePlayer2Y - basePlayer1Y) < halfGridLengthY / cellSize && whileFlag < maxAttempt)
         {
             whileFlag++;
             basePlayer1Y = UnityEngine.Random.Range(0, gridLengthY);

@@ -7,10 +7,14 @@ public class CameraManager : MonoBehaviour, IServiceMB,  ICameraManagerService
     private Camera _camPlayerOne;
     private Camera _camPlayerTwo;
 
-
-    private void Awake()
+    private void Start()
     {
-        Register();
+        BootstrapManager.OnGameReady += OnGameReady;
+    }
+    private void OnGameReady()
+    {
+        Utils.ColorLog("GameManager: Game is ready!", "Cyan");
+        // Logique de démarrage ici si nécessaire
         RandomizeCameraSelection();
     }
 
@@ -79,5 +83,11 @@ public class CameraManager : MonoBehaviour, IServiceMB,  ICameraManagerService
             // Orienter la caméra vers le centre de la grille
             _availableCamera[i].transform.LookAt(gridCenter);
         }
+    }
+
+    private void OnDestroy()
+    {
+        BootstrapManager.OnGameReady -= OnGameReady;
+        Unregister();
     }
 }

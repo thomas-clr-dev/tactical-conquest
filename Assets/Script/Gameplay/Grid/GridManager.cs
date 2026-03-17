@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour, IServiceMB, IGridManagerService
 
     private void Awake()
     {
-        Register();
+        // Ne plus s'auto-register
         _gridSize = new int[_gridLengthX, _gridLengthY];
     }
 
@@ -37,5 +37,9 @@ public class GridManager : MonoBehaviour, IServiceMB, IGridManagerService
         }
         ServiceLocator.Get<ITileManagerService>().SetPlayerBase(_gridLengthX, _gridLengthY, CellSize);
         ServiceLocator.Get<ICameraManagerService>().SetCameraPositionFromGrid(_gridLengthX, _gridLengthX, CellSize);
+    }
+    private void OnDestroy()
+    {
+        Unregister();
     }
 }

@@ -3,9 +3,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour, IServiceMB, IGameManagerReadService
 {
+    //private bool _isGameReady = false;
+
     private void Awake()
     {
-        Register();
+        BootstrapManager.OnGameReady += OnGameReady;
+    }
+
+    private void OnGameReady()
+    {
+        //_isGameReady = true;
+        Utils.ColorLog("GameManager : Game is ready !", "Cyan");
     }
 
     public void Register()
@@ -18,9 +26,10 @@ public class GameManager : MonoBehaviour, IServiceMB, IGameManagerReadService
         ServiceLocator.Unregister<IGameManagerReadService>(this);
     }
 
-    private void Start()
+    private void OnDestroy()
     {
-        ServiceLocator.Get<IGridManagerService>().GenerateGrid();
+        BootstrapManager.OnGameReady -= OnGameReady;
+        Unregister();
     }
 
 }
