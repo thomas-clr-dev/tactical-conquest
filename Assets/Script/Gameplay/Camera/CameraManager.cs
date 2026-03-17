@@ -13,8 +13,6 @@ public class CameraManager : MonoBehaviour, IServiceMB,  ICameraManagerService
     }
     private void OnGameReady()
     {
-        Utils.ColorLog("GameManager: Game is ready!", "Cyan");
-        // Logique de démarrage ici si nécessaire
         RandomizeCameraSelection();
     }
 
@@ -40,19 +38,43 @@ public class CameraManager : MonoBehaviour, IServiceMB,  ICameraManagerService
             Cam2Key = Random.Range(0, _availableCamera.Count);
         }
 
-        Camera CamP1 = _availableCamera[Cam1Key];
-        Camera CamP2 = _availableCamera[Cam2Key];
+        _camPlayerOne = _availableCamera[Cam1Key];
+        _camPlayerTwo = _availableCamera[Cam2Key];
 
-        Utils.SafeSetActive(CamP1.gameObject, true);
-        Utils.SafeSetActive(CamP2.gameObject, true);
+        Utils.SafeSetActive(_camPlayerOne.gameObject, true);
+        Utils.SafeSetActive(_camPlayerTwo.gameObject, true);
 
-        CamP1.fieldOfView = CamP2.fieldOfView = 75;
+        _camPlayerOne.fieldOfView = _camPlayerTwo.fieldOfView = 75;
 
-        CamP1.gameObject.name += "(player 1)";
-        CamP2.gameObject.name += "(player 2)";
+        _camPlayerOne.gameObject.name += "(player 1)";
+        _camPlayerTwo.gameObject.name += "(player 2)";
 
-        CamP1.rect = new Rect(0, 0, 0.5f, 1f);
-        CamP2.rect = new Rect(0.5f, 0, 0.5f, 1f);
+        _camPlayerOne.rect = new Rect(0, 0, 0.5f, 1f);
+        _camPlayerTwo.rect = new Rect(0.5f, 0, 0.5f, 1f);
+    }
+
+    public Camera GetCameraAtScreenPosition(Vector3 screenPosition)
+    {
+        if (_camPlayerOne == null || _camPlayerTwo == null)
+        {
+            Utils.ErrorLog("Cameras not initialized !");
+        }
+
+        float normalizedX = screenPosition.x / Screen.width;
+
+        if (normalizedX < 0.5)
+        {
+            return _camPlayerOne;
+        }
+        else
+        {
+            return _camPlayerTwo;
+        }
+    }
+
+    public Camera GetPlayerCamera(int playerID)
+    {
+        return playerID == 1 ? _camPlayerOne : _camPlayerTwo;
     }
 
     public void SetCameraPositionFromGrid(int gridLenthX, int gridLengthY, float CellSize)

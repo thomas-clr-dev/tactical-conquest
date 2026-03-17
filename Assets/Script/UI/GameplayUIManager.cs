@@ -24,9 +24,6 @@ public class GameplayUIManager : MonoBehaviour, IServiceMB, IGameplayUIManagerSe
 
         if (_iTurnService != null)
         {
-            Utils.ColorLog("GameplayUIManager: Services ready!", "Green");
-            // Initialisation de l'UI ici
-
             var root = GetComponent<UIDocument>().rootVisualElement;
 
             // --- SETUP Player 1 ---

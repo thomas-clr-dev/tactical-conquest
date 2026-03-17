@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using System;
 
 public enum TileOwner
 {
@@ -12,11 +12,24 @@ public class TileView : MonoBehaviour
 {
     public TileOwner Owner = TileOwner.Neutral;
 
+    public event Action<TileView, int> OnTileLeftClicked;
+    public event Action<TileView, int> OnTileRightClicked;
+
     private Renderer tileRenderer;
 
     private void Awake()
     {
         tileRenderer = gameObject.GetComponent<Renderer>();
+    }
+
+    public void TriggerLeftClick()
+    {
+        OnTileLeftClicked?.Invoke(this, 0);
+    }
+
+    public void TriggerRightClick()
+    {
+        OnTileRightClicked?.Invoke(this, 1);
     }
 
     public void SetTile(Material tileMat, TileOwner newTileOwner)

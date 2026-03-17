@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 559795072963029608}
   - component: {fileID: 833452702288110788}
   - component: {fileID: 128497237076071221}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d11782d7da42b44a8050f8968300d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileView
-  TileOwner: 0
+  Owner: 0
 --- !u!33 &559795072963029608
 MeshFilter:
   m_ObjectHideFlags: 0

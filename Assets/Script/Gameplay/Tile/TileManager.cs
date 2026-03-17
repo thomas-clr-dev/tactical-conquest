@@ -13,10 +13,11 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
     [SerializeField] private Material _player2Mat;
 
     private ITurnManagerService _iTurnManagerService;
+    private IGridManagerService _iGridManagerService;
 
     private Dictionary<TileView, Vector3> m_TileDictionary = new Dictionary<TileView, Vector3>();
 
-    public event Action<int> OnBaseGenerated;
+    public event Action<int, Vector3> OnBaseGenerated;
 
     private void Start()
     {
@@ -30,13 +31,28 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         if (_iTurnManagerService != null)
         {
             _iTurnManagerService.OnTurnChanged += ChangeTileVisibility;
-            ChangeTileVisibility();
+        }
+
+        _iGridManagerService = ServiceLocator.Get<IGridManagerService>();
+        if (_iGridManagerService != null)
+        {
+            _iGridManagerService.OnGridGenerated += ChangeTileVisibility;
         }
     }
 
     private void OnDestroy()
     {
         BootstrapManager.OnGameReady -= OnGameReady;
+
+        foreach (var tile in m_TileDictionary.Keys)
+        {
+            if (tile != null)
+            {
+                tile.OnTileLeftClicked -= HandleTileLeftClick;
+                tile.OnTileRightClicked -= HandleTileRightClick;
+            }
+        }
+
         Unregister();
     }
 
@@ -57,9 +73,66 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
         newTile.name = $"Tile_{x}_{y}";
 
+        newTile.layer = LayerMask.NameToLayer("Tiles");
+
+        if (newTile.GetComponent<Collider>() == null)
+        {
+            Utils.ErrorLog($"Tile {newTile.name} has NO COLLIDER! Clicks won't work!");
+        }
+
         if (newTile.GetComponent<TileView>())
         {
-            m_TileDictionary.Add(newTile.GetComponent<TileView>(), tilePosition);
+            TileView tileView = newTile.GetComponent<TileView>();
+            m_TileDictionary.Add(tileView, tilePosition);
+
+            tileView.OnTileLeftClicked += HandleTileLeftClick;
+            tileView.OnTileRightClicked += HandleTileRightClick;
+        }
+    }
+
+    private void HandleTileLeftClick(TileView tile, int mouseButton)
+    {
+        int currentPlayer = _iTurnManagerService.CurrentPlayerID;
+
+        Utils.ColorLog($"Left click on {tile.name} (Owner : {tile.Owner})", "Purple");
+
+        if (tile.IsOwnedBy(currentPlayer))
+        {
+            Utils.ColorLog($"Player {currentPlayer} tile - Showing movement options", "DarkGreen");
+            //TODO Afficher les déplacement
+        }
+        else
+        {
+            Utils.ColorLog($"Not Player {currentPlayer} tile", "Red");
+        }
+    }
+
+    private void HandleTileRightClick(TileView tile, int mouseButton)
+    {
+        int currentPlayer = _iTurnManagerService.CurrentPlayerID;
+
+        Utils.ColorLog($"Left click on {tile.name} (Owner : {tile.Owner})", "Purple");
+
+        if (tile.IsOwnedBy(currentPlayer))
+        {
+            Utils.ColorLog($"Player {currentPlayer} tile - Opening troop purchase UI", "DarkGreen");
+            //TODO Afficher les déplacement
+        }
+        else
+        {
+            Utils.ColorLog("Cannot buy troops on enemy tile", "Red");
+        }
+    }
+
+    public void SubscribeToTileCheck(Action<TileView> onLeftClick, Action<TileView> onRightClick)
+    {
+        foreach (var tile in m_TileDictionary.Keys)
+        {
+            if (tile != null)
+            {
+                tile.OnTileLeftClicked += (t, button) => onLeftClick?.Invoke(t);
+                tile.OnTileRightClicked += (t, button) => onRightClick?.Invoke(t);
+            }
         }
     }
 
@@ -78,7 +151,7 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
         while (Mathf.Abs(basePlayer1X - basePlayer2X) < halfGridLengthX / cellSize && whileFlag < maxAttempt)
         {
-            whileFlag ++;
+            whileFlag++;
             basePlayer1X = UnityEngine.Random.Range(0, gridLengthX);
         }
 
@@ -97,22 +170,19 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         if (tilePlayer1 != null)
         {
             tilePlayer1.SetTile(_player1Mat, TileOwner.Player1);
-            OnBaseGenerated?.Invoke(1);
+            OnBaseGenerated?.Invoke((int)TileOwner.Player1, tilePlayer1.transform.position);
         }
-        else Utils.ErrorLog("Tile P1 not found !");
 
         TileView tilePlayer2 = m_TileDictionary.FirstOrDefault(x => x.Value == basePlayer2).Key;
         if (tilePlayer2 != null)
         {
             tilePlayer2.SetTile(_player2Mat, TileOwner.Player2);
-            OnBaseGenerated?.Invoke(2);
+            OnBaseGenerated?.Invoke((int)TileOwner.Player2, tilePlayer2.transform.position);
         }
-        else Utils.ErrorLog("Tile P2 not found !");
 
         foreach (TileView tile in m_TileDictionary.Keys)
         {
             TileOwner tileOwner = tile.GetTileOwner();
-            Utils.ColorLog($"Owner : {tileOwner}", "Green");
         }
     }
 

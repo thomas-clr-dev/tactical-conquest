@@ -4,4 +4,6 @@ using UnityEngine;
 public interface ICameraManagerService
 {
     public void SetCameraPositionFromGrid(int gridLenthX, int gridLengthY, float CellSize);
+    public Camera GetCameraAtScreenPosition(Vector3 screenPosition);
+    public Camera GetPlayerCamera(int playerID);
 }

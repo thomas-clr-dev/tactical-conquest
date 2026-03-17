@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour, IServiceMB, IGameManagerReadService
     private void OnGameReady()
     {
         //_isGameReady = true;
-        Utils.ColorLog("GameManager : Game is ready !", "Cyan");
+        Time.timeScale = 1.0f;
     }
 
     public void Register()

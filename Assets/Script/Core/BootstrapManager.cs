@@ -8,8 +8,10 @@ public class BootstrapManager : MonoBehaviour
 
     [Header("Manager References")]
     [SerializeField] private GameManager _gameManager;
+    [SerializeField] private PlayerService _playerService;
     [SerializeField] private GridManager _gridManager;
     [SerializeField] private TileManager _tileManager;
+    [SerializeField] private TileInputDetector _tileInputDetector;
     [SerializeField] private CameraManager _cameraManager;
     [SerializeField] private TurnManager _turnManager;
     [SerializeField] private UnitManager _unitManager;
@@ -32,15 +34,19 @@ public class BootstrapManager : MonoBehaviour
 
     private IEnumerator RegisterServices()
     {
-        Utils.ColorLog("--- Registering Services ---", "Cyan");
-
         RegisterService(_gameManager, "GameManager");
+        yield return null;
+
+        RegisterService(_playerService, "PlayerService");
         yield return null;
 
         RegisterService(_gridManager, "GridManager");
         yield return null;
 
         RegisterService(_tileManager, "TileManager");
+        yield return null;
+
+        RegisterService(_tileInputDetector, "TileinputDetector");
         yield return null;
 
         RegisterService(_cameraManager, "CameraManager");
@@ -61,23 +67,18 @@ public class BootstrapManager : MonoBehaviour
         if (service != null)
         {
             service.Register();
-            Utils.ColorLog($"✓ Registered : {serviceName}", "Green");
-        }
-        else
-        {
-            Utils.ErrorLog($"✗ Failed to register: {serviceName} (null reference)");
         }
     }
 
     private IEnumerator VerifyServices()
     {
-        Utils.ColorLog("--- Verifying Services ---", "Yellow");
-
         bool allServicesReady = true;
 
         allServicesReady &= VerifyService<IGameManagerReadService>("IGameManagerReadService");
+        allServicesReady &= VerifyService<IPlayerService>("IPlayerService");
         allServicesReady &= VerifyService<IGridManagerService>("IGridManagerService");
         allServicesReady &= VerifyService<ITileManagerService>("ITileManagerService");
+        allServicesReady &= VerifyService<ITileInputDetectorService>("ITileInputDetector");
         allServicesReady &= VerifyService<ICameraManagerService>("ICameraManagerService");
         allServicesReady &= VerifyService<ITurnManagerService>("ITurnManagerService");
         allServicesReady &= VerifyService<IUnitManagerService>("IUnitManagerService");
@@ -87,8 +88,6 @@ public class BootstrapManager : MonoBehaviour
             Utils.ErrorLog("CRITICAL : Not all services are ready !");
             yield break;
         }
-
-        Utils.ColorLog("--- All Services Ready ---", "Green");
         yield return null;
     }
 
@@ -97,7 +96,6 @@ public class BootstrapManager : MonoBehaviour
         T service = ServiceLocator.Get<T>();
         if (service != null)
         {
-            Utils.ColorLog($"✓ Verified : {serviceName}", "Green");
             return true;
         }
         else
@@ -109,8 +107,6 @@ public class BootstrapManager : MonoBehaviour
 
     private IEnumerator InitializeGameLogic()
     {
-        Utils.ColorLog("--- Initializing Game Logic ---", "Magenta");
-
         Utils.ColorLog("=== GAME READY ===", "Yellow");
         OnGameReady?.Invoke();
 
@@ -121,7 +117,6 @@ public class BootstrapManager : MonoBehaviour
         if (gridManager != null)
         {
             gridManager.GenerateGrid();
-            Utils.ColorLog("Grid generation initiated", "Yellow");
         }
 
         yield return null;
