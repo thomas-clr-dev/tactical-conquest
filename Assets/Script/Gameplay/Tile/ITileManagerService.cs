@@ -7,5 +7,7 @@ public interface ITileManagerService
 
     public void SetPlayerBase(int gridLengthX, int gridLengthY, float cellSize);
 
+    public int GetConqueredTileCount(int currentPlayer);
+
     public event Action<int, Vector3> OnBaseGenerated;
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BootstrapManager : MonoBehaviour
@@ -15,6 +16,7 @@ public class BootstrapManager : MonoBehaviour
     [SerializeField] private CameraManager _cameraManager;
     [SerializeField] private TurnManager _turnManager;
     [SerializeField] private UnitManager _unitManager;
+    [SerializeField] private EconomyManager _economyManager;
 
     private void Awake()
     {
@@ -58,6 +60,9 @@ public class BootstrapManager : MonoBehaviour
         RegisterService(_unitManager, "UnitManager");
         yield return null;
 
+        RegisterService(_economyManager, "EconomyManager");
+        yield return null;
+
         Utils.ColorLog("--- All Services Registered ---", "Cyan");
 
     }
@@ -82,6 +87,7 @@ public class BootstrapManager : MonoBehaviour
         allServicesReady &= VerifyService<ICameraManagerService>("ICameraManagerService");
         allServicesReady &= VerifyService<ITurnManagerService>("ITurnManagerService");
         allServicesReady &= VerifyService<IUnitManagerService>("IUnitManagerService");
+        allServicesReady &= VerifyService<IEconomyManagerService>("IEconomyManagerService");
 
         if (!allServicesReady)
         {

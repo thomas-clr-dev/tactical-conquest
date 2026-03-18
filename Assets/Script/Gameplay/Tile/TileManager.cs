@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 {
@@ -11,6 +12,7 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
     [SerializeField] private Material _sandyMat;
     [SerializeField] private Material _player1Mat;
     [SerializeField] private Material _player2Mat;
+    [SerializeField] private Material _movementHighlightMat;
 
     private ITurnManagerService _iTurnManagerService;
     private IGridManagerService _iGridManagerService;
@@ -18,6 +20,9 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
     private Dictionary<TileView, Vector3> m_TileDictionary = new Dictionary<TileView, Vector3>();
 
     public event Action<int, Vector3> OnBaseGenerated;
+
+    private List<TileView> _highlightedTiles = new List<TileView>();
+    private TileView _selectedTile = null;
 
     private void Start()
     {
@@ -31,6 +36,7 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         if (_iTurnManagerService != null)
         {
             _iTurnManagerService.OnTurnChanged += ChangeTileVisibility;
+            _iTurnManagerService.OnTurnChanged += ClearHighlight;
         }
 
         _iGridManagerService = ServiceLocator.Get<IGridManagerService>();
@@ -43,6 +49,10 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
     private void OnDestroy()
     {
         BootstrapManager.OnGameReady -= OnGameReady;
+
+        _iTurnManagerService.OnTurnChanged -= ChangeTileVisibility;
+        _iTurnManagerService.OnTurnChanged -= ClearHighlight;
+        _iGridManagerService.OnGridGenerated -= ChangeTileVisibility;
 
         foreach (var tile in m_TileDictionary.Keys)
         {
@@ -90,6 +100,11 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         }
     }
 
+    public int GetConqueredTileCount(int currentPlayer)
+    {
+        return m_TileDictionary.Keys.Count(tile => tile.IsOwnedBy(currentPlayer));
+    }
+
     private void HandleTileLeftClick(TileView tile, int mouseButton)
     {
         int currentPlayer = _iTurnManagerService.CurrentPlayerID;
@@ -98,13 +113,74 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
         if (tile.IsOwnedBy(currentPlayer))
         {
-            Utils.ColorLog($"Player {currentPlayer} tile - Showing movement options", "DarkGreen");
-            //TODO Afficher les déplacement
+            UnitView unit = tile.GetUnitOnTile();
+
+            if (unit != null && unit.IsOwnedBy(currentPlayer))
+            {
+                Utils.ColorLog($"Unit found on {tile.name} - Movement : {unit.UnitData.MaxMovement}", "DarkGreen");
+
+                ShowMovementRange(tile, unit.UnitData.MaxMovement);
+                _selectedTile = tile;
+            }
+            else
+            {
+                Utils.ColorLog($"Not unit on this tile", "Yellow");
+                ClearHighlight();
+            }
         }
         else
         {
             Utils.ColorLog($"Not Player {currentPlayer} tile", "Red");
+            ClearHighlight();
         }
+    }
+
+    private void ShowMovementRange(TileView centerTile, int maxMovement)
+    {
+        ClearHighlight();
+
+        Vector3 centerPos = centerTile.transform.position;
+
+        foreach (var kvp in m_TileDictionary)
+        {
+            TileView tileKey = kvp.Key;
+            Vector3 tilePos = kvp.Value;
+
+            float distX = Mathf.Abs(tilePos.x - centerPos.x);
+            float distZ = Mathf.Abs(tilePos.z - centerPos.z);
+            float cellSize = _iGridManagerService.CellSize;
+
+            int tileDistanceX = Mathf.RoundToInt(distX / cellSize);
+            int tileDistanceZ = Mathf.RoundToInt(distZ / cellSize);
+            int totalDistance = tileDistanceX + tileDistanceZ;
+
+            if (totalDistance > 0 && totalDistance <= maxMovement)
+            {
+                if (tileKey.GetUnitOnTile() == null)
+                {
+                    tileKey.Highlight(_movementHighlightMat);
+                    _highlightedTiles.Add(tileKey);
+                }
+            }
+        }
+
+        Utils.ColorLog($"Highlighted {_highlightedTiles.Count} tiles (Range: {maxMovement})", "Green");
+    }
+
+    private void ClearHighlight()
+    {
+        foreach (var tile in _highlightedTiles)
+        {
+            if (tile != null)
+            {
+                tile.RemoveHighlight();
+            }
+        }
+
+        _highlightedTiles.Clear();
+        _selectedTile = null;
+
+        Utils.ColorLog("Cleared all highlighted tiles", "Yellow");
     }
 
     private void HandleTileRightClick(TileView tile, int mouseButton)

@@ -10,6 +10,8 @@ public class GridManager : MonoBehaviour, IServiceMB, IGridManagerService
     [SerializeField] private int _gridLengthX = 10;
     [SerializeField] private int _gridLengthY = 10;
 
+    float IGridManagerService.CellSize => CellSize;
+
     public event Action OnGridGenerated;
 
     private void Awake()

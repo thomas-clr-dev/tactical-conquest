@@ -77,6 +77,33 @@ MonoBehaviour:
     collaborator: "Non assign\xE9"
     createdDate: 17/03/2026 16:42
     dueDate: 
+  - id: acc44230-a9da-44ac-90fe-2101308bc3fe
+    title: "G\xE9rer le syst\xE8me d'\xE9conomie"
+    description: "Faire en sorte d'avoir 1 gold par case occup\xE9"
+    isCompleted: 1
+    priority: 1
+    category: Feature
+    collaborator: "Non assign\xE9"
+    createdDate: 18/03/2026 12:16
+    dueDate: 
+  - id: 591c3808-25c3-47b7-8900-b6301419c81e
+    title: "Compt\xE9 le nombre de case conquise par le joueur"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 18/03/2026 12:47
+    dueDate: 
+  - id: 7226505b-7469-49d4-ac76-e804e41c7750
+    title: "Cr\xE9er un wallet par joueur"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 18/03/2026 12:56
+    dueDate: 
   collaborators:
   - "Non assign\xE9"
   - Thomas

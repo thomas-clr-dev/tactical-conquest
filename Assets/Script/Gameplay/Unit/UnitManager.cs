@@ -11,7 +11,7 @@ public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
 
     private List<UnitView> _allUnits = new List<UnitView>();
 
-    private event Action _onUnitsGenerated;
+    public event Action OnUnitsGenerated;
 
     public Transform Player1TroopsContainer;
     public Transform Player2TroopsContainer;
@@ -45,7 +45,7 @@ public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
             _tileManagerService.OnBaseGenerated += OnTroopsGeneration;
         }
 
-        _onUnitsGenerated += ChangeUnitVisibility;
+        OnUnitsGenerated += ChangeUnitVisibility;
 
         _iTurnManagerService = ServiceLocator.Get<ITurnManagerService>();
 
@@ -128,7 +128,7 @@ public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
 
         Utils.ColorLog($"Unit added to tracking: {unitView.gameObject.name} (Total: {_allUnits.Count})", "Green");
 
-        _onUnitsGenerated?.Invoke();
+        OnUnitsGenerated?.Invoke();
     }
 
     private void OnDestroy()

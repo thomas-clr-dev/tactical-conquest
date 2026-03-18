@@ -632,6 +632,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea78329a1d64ad489bb663378993b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayUIManager
+--- !u!1 &598278880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 598278881}
+  - component: {fileID: 598278882}
+  m_Layer: 0
+  m_Name: EconomyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &598278881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598278880}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.77236, y: 0, z: 8.83828}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 895387008}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &598278882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598278880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43645151d2536e24baa356c743620f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EconomyManager
+  Player1Wallet: 0
+  Player2Wallet: 0
 --- !u!1 &602068138
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +730,7 @@ MonoBehaviour:
   _cameraManager: {fileID: 1098400080}
   _turnManager: {fileID: 778545803}
   _unitManager: {fileID: 201571973}
+  _economyManager: {fileID: 598278882}
 --- !u!1 &625995238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,6 +1126,7 @@ Transform:
   - {fileID: 1098400079}
   - {fileID: 778545802}
   - {fileID: 201571972}
+  - {fileID: 598278881}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1098400078

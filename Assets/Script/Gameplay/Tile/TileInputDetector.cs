@@ -27,15 +27,6 @@ public class TileInputDetector : MonoBehaviour, IServiceMB, ITileInputDetectorSe
     private void OnGameReady()
     {
         _iCameraManagerService = ServiceLocator.Get<ICameraManagerService>();
-
-        if (_iCameraManagerService != null)
-        {
-            Utils.ColorLog("TileInputDetector: Camera service acquired", "Green");
-        }
-        else
-        {
-            Utils.ErrorLog("TileInputDetector: CameraManagerService not found!");
-        }
     }
 
     private void Update()
