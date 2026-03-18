@@ -1416,6 +1416,7 @@ MonoBehaviour:
   _sandyMat: {fileID: 2100000, guid: 90cbed3e6221db64b842dcb39b454387, type: 2}
   _player1Mat: {fileID: 2100000, guid: 1e6f2098f9402494aae76896dd201cd0, type: 2}
   _player2Mat: {fileID: 2100000, guid: 539244d3a94995842980527099f72ab3, type: 2}
+  _movementHighlightMat: {fileID: 2100000, guid: 4da22d631678b374493f978da47c30d4, type: 2}
 --- !u!1 &1753552945
 GameObject:
   m_ObjectHideFlags: 0
