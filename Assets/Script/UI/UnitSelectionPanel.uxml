@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Script/UI/UnitSelectionPanelUSS.uss?fileID=7433441132597879392&amp;guid=02b14ce9ce941f84892b0c33d4350e34&amp;type=3#UnitSelectionPanelUSS"/>
+    <ui:VisualElement name="UnitSelectionPanel" class="panel-container">
+        <ui:Label text="Select Units to Move" class="panel-header"/>
+        <ui:VisualElement name="UnitsContainer" class="units-container"/>
+        <ui:VisualElement class="separator"/>
+        <ui:Label name="TotalLabel" text="Total remaining: 0/0" class="total-label"/>
+        <ui:VisualElement class="button-container">
+            <ui:Button name="CancelButton" text="Cancel" class="btn btn-cancel"/>
+            <ui:Button name="ConfirmButton" text="Confirm" class="btn btn-confirm"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,5 +1,8 @@
-using UnityEngine;
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public enum TileOwner
 {
@@ -19,8 +22,13 @@ public class TileView : MonoBehaviour
     private Material _originalMaterial;
     private bool _isHighlighted = false;
 
+    private ITurnManagerService _iTurnManagerService;
+
     private void Awake()
     {
+
+        _iTurnManagerService = ServiceLocator.Get<ITurnManagerService>();
+
         tileRenderer = gameObject.GetComponent<Renderer>();
         if (tileRenderer != null )
         {
@@ -42,8 +50,16 @@ public class TileView : MonoBehaviour
     {
         if (tileRenderer != null && !_isHighlighted)
         {
-            tileRenderer.material = highlightMat;
-            _isHighlighted = true;
+            if ((int)Owner != _iTurnManagerService.CurrentPlayerID)
+            {
+                tileRenderer.material = highlightMat;
+                _isHighlighted = true;
+            }
+            else
+            {
+                tileRenderer.material = _originalMaterial;
+                _isHighlighted = true;
+            }
         }
     }
 
@@ -115,5 +131,82 @@ public class TileView : MonoBehaviour
         }
 
         return null;
+    }
+
+    public List<UnitView> GetAllUnitsOnTile()
+    {
+        List<UnitView> units = new List<UnitView>();
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f, LayerMask.GetMask("Units"));
+
+        foreach (var collider in colliders)
+        {
+            UnitView unit = collider.GetComponent<UnitView>();
+            if (unit != null)
+            {
+                units.Add(unit); 
+            }
+        }
+
+        return units;
+    }
+
+    public Dictionary<UnitType, List<UnitView>> GetUnitsGroupedByTypes()
+    {
+        var groups = new Dictionary<UnitType, List<UnitView>>()
+        {
+            { UnitType.Scout, new List<UnitView>() },
+            { UnitType.Soldier, new List<UnitView>() },
+            { UnitType.Tank, new List<UnitView>() }
+        };
+
+        List<UnitView> allUnits = GetAllUnitsOnTile();
+
+        foreach (UnitView unit in allUnits)
+        {
+            UnitType type = unit.UnitData.UnitType;
+            if (groups.ContainsKey(type))
+            {
+                groups[type].Add(unit);
+            }
+        }
+
+        return groups;
+    }
+
+    public List<UnitView> GetUnitsByType(UnitType unitType)
+    {
+        return GetAllUnitsOnTile().Where(u => u.UnitData.UnitType == unitType).ToList();
+    }
+
+    public Dictionary<UnitType, int> GetUnitCountByType()
+    {
+        var counts = new Dictionary<UnitType, int>
+        {
+            { UnitType.Scout, 0 },
+            { UnitType.Soldier, 0 },
+            { UnitType.Tank, 0 }
+        };
+
+        foreach (UnitView unit in GetAllUnitsOnTile())
+        {
+            UnitType type = unit.UnitData.UnitType;
+            if (counts.ContainsKey(type))
+            {
+                counts[type]++;
+            }
+        }
+
+        return counts;
+    }
+
+    public bool HasMultipleUnits()
+    {
+        return GetAllUnitsOnTile().Count > 1;
+    }
+
+    public int GetUnitCount()
+    {
+        return GetAllUnitsOnTile().Count;
     }
 }

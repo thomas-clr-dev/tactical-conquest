@@ -104,6 +104,25 @@ MonoBehaviour:
     collaborator: "Non assign\xE9"
     createdDate: 18/03/2026 12:56
     dueDate: 
+  - id: 950cfaf9-3370-4dab-ac8e-7d173a314cbe
+    title: "G\xE9rer unit mov"
+    description: "G\xE9rer le move des unit en fonction de >maxMov dans le groupe
+      sur la tile\n"
+    isCompleted: 0
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 19/03/2026 13:42
+    dueDate: 
+  - id: d257852d-1c70-4835-84a8-b2e56cff45b4
+    title: Laisser 1 unit par tile
+    description: faire que ce soit une des unit avec le <maxMov qui reste
+    isCompleted: 0
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 19/03/2026 13:43
+    dueDate: 
   collaborators:
   - "Non assign\xE9"
   - Thomas

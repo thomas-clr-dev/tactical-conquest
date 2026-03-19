@@ -43,16 +43,16 @@ public class EconomyManager : MonoBehaviour, IServiceMB, IEconomyManagerService
     private void AddGold()
     {
         int currentPlayer = _iTurnManagerService.CurrentPlayerID;
-        int previousPLayer = currentPlayer == 1 ? 2 : 1;
+        int previousPlayer = currentPlayer == 1 ? 2 : 1;
 
-        int conqueredTiles = _iTileManagerService.GetConqueredTileCount(currentPlayer);
+        int conqueredTiles = _iTileManagerService.GetConqueredTileCount(previousPlayer);
 
-        if (previousPLayer == 1)
+        if (previousPlayer == 1)
         {
             int oldWallet = Player1Wallet;
             Player1Wallet += conqueredTiles;
         }
-        else if (previousPLayer == 2)
+        else if (previousPlayer == 2)
         {
             int oldWallet = Player2Wallet;
             Player2Wallet += conqueredTiles;

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b9d6d40957ac445b5088f92baf05db, type: 3}
   m_Name: Tank
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  UnitOwner: 0
   UnitName: Tank
+  UnitType: 2
   AttackPower: 5
   MaxMovement: 1
   Price: 15

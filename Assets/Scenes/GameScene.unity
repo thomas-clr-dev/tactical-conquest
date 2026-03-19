@@ -1323,6 +1323,74 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 23
   m_MaxRayIntersections: 0
+--- !u!1 &1376722586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1376722589}
+  - component: {fileID: 1376722588}
+  - component: {fileID: 1376722587}
+  m_Layer: 5
+  m_Name: "\U0001FA84 UnitSelectionPanel"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1376722587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376722586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b203a8076ccb140953c6d1794614bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnitSelectionPanel
+--- !u!114 &1376722588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376722586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 6a1b2affc38570f40bb9a8c23f951946, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 1a974c16d6d5efe4d9048b54283635f0, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &1376722589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376722586}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1503121106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,7 +1483,9 @@ MonoBehaviour:
   _tilesContainer: {fileID: 838229371}
   _sandyMat: {fileID: 2100000, guid: 90cbed3e6221db64b842dcb39b454387, type: 2}
   _player1Mat: {fileID: 2100000, guid: 1e6f2098f9402494aae76896dd201cd0, type: 2}
+  _player1BaseMat: {fileID: 2100000, guid: 394135d5f460237458e502fd2aff07b4, type: 2}
   _player2Mat: {fileID: 2100000, guid: 539244d3a94995842980527099f72ab3, type: 2}
+  _player2BaseMat: {fileID: 2100000, guid: 84f0e21081e1a7f4eb6b6693df5c11a5, type: 2}
   _movementHighlightMat: {fileID: 2100000, guid: 4da22d631678b374493f978da47c30d4, type: 2}
 --- !u!1 &1753552945
 GameObject:
@@ -1671,6 +1741,7 @@ SceneRoots:
   - {fileID: 838229371}
   - {fileID: 1503121107}
   - {fileID: 1753552947}
+  - {fileID: 1376722589}
   - {fileID: 525065278}
   - {fileID: 133965992}
   - {fileID: 2126646273}

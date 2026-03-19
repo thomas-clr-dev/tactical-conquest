@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b9d6d40957ac445b5088f92baf05db, type: 3}
   m_Name: Soldier
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  UnitOwner: 0
   UnitName: Soldier
+  UnitType: 1
   AttackPower: 3
   MaxMovement: 3
   Price: 10

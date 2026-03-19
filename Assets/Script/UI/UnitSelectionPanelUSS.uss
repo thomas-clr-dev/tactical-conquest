@@ -1,0 +1,139 @@
+/* Panel principal */
+.panel-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    width: 400px;
+    background-color: rgba(30, 30, 30, 0.95);
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: rgba(100, 100, 100, 1);
+    padding: 20px;
+}
+
+/* Header */
+.panel-header {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: white;
+    -unity-text-align: middle-center;
+    margin-bottom: 15px;
+}
+
+/* Container des unités */
+.units-container {
+    margin-bottom: 10px;
+}
+
+/* Ligne d'unité */
+.unit-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgba(50, 50, 50, 0.8);
+    border-radius: 5px;
+}
+
+.unit-name {
+    font-size: 16px;
+    color: white;
+    flex-grow: 1;
+}
+
+.unit-count {
+    font-size: 14px;
+    color: rgb(200, 200, 200);
+    margin-right: 10px;
+}
+
+.unit-controls {
+    flex-direction: row;
+    align-items: center;
+}
+
+.btn-increment,
+.btn-decrement {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    -unity-font-style: bold;
+    background-color: rgba(80, 80, 80, 1);
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: rgba(120, 120, 120, 1);
+}
+
+.btn-increment:hover,
+.btn-decrement:hover {
+    background-color: rgba(100, 100, 100, 1);
+}
+
+.btn-increment:active,
+.btn-decrement:active {
+    background-color: rgba(60, 60, 60, 1);
+}
+
+.unit-selected {
+    font-size: 16px;
+    -unity-font-style: bold;
+    color: rgb(100, 200, 255);
+    margin-left: 10px;
+    margin-right: 10px;
+    min-width: 30px;
+    -unity-text-align: middle-center;
+}
+
+/* Séparateur */
+.separator {
+    height: 2px;
+    background-color: rgba(100, 100, 100, 0.5);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Total */
+.total-label {
+    font-size: 16px;
+    color: white;
+    -unity-text-align: middle-center;
+    margin-bottom: 15px;
+}
+
+/* Boutons */
+.button-container {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.btn {
+    flex-grow: 1;
+    height: 40px;
+    font-size: 16px;
+    -unity-font-style: bold;
+    border-radius: 5px;
+    border-width: 2px;
+}
+
+.btn-cancel {
+    background-color: rgba(180, 50, 50, 1);
+    border-color: rgba(200, 70, 70, 1);
+    color: white;
+    margin-right: 10px;
+}
+
+.btn-cancel:hover {
+    background-color: rgba(200, 70, 70, 1);
+}
+
+.btn-confirm {
+    background-color: rgba(50, 150, 50, 1);
+    border-color: rgba(70, 170, 70, 1);
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: rgba(70, 170, 70, 1);
+}
