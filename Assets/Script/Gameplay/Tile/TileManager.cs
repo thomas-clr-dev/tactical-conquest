@@ -11,7 +11,9 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
     [SerializeField] private Material _sandyMat;
     [SerializeField] private Material _player1Mat;
+    [SerializeField] private Material _player1BaseMat;
     [SerializeField] private Material _player2Mat;
+    [SerializeField] private Material _player2BaseMat;
     [SerializeField] private Material _movementHighlightMat;
 
     private ITurnManagerService _iTurnManagerService;
@@ -23,6 +25,9 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
     private List<TileView> _highlightedTiles = new List<TileView>();
     private TileView _selectedTile = null;
+
+    private TileView _player1Base = null;
+    private TileView _player2Base = null;
 
     private void Start()
     {
@@ -245,14 +250,16 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         TileView tilePlayer1 = m_TileDictionary.FirstOrDefault(x => x.Value == basePlayer1).Key;
         if (tilePlayer1 != null)
         {
-            tilePlayer1.SetTile(_player1Mat, TileOwner.Player1);
+            tilePlayer1.SetTile(_player1BaseMat, TileOwner.Player1);
+            _player1Base = tilePlayer1;
             OnBaseGenerated?.Invoke((int)TileOwner.Player1, tilePlayer1.transform.position);
         }
 
         TileView tilePlayer2 = m_TileDictionary.FirstOrDefault(x => x.Value == basePlayer2).Key;
         if (tilePlayer2 != null)
         {
-            tilePlayer2.SetTile(_player2Mat, TileOwner.Player2);
+            tilePlayer2.SetTile(_player2BaseMat, TileOwner.Player2);
+            _player2Base = tilePlayer2;
             OnBaseGenerated?.Invoke((int)TileOwner.Player2, tilePlayer2.transform.position);
         }
 
@@ -279,7 +286,14 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
                 List<TileView> player1TilesList = m_TileDictionary.Keys.Where(tile => (int)tile.Owner == currentPlayer).ToList();
                 foreach (TileView tile in player1TilesList)
                 {
-                    tile.SetTileVisibility(_player1Mat);
+                    if (tile == _player1Base)
+                    {
+                        tile.SetTileVisibility(_player1BaseMat);
+                    }
+                    else
+                    {
+                        tile.SetTileVisibility(_player1Mat);
+                    }
                 }
                 break;
             case 2:
@@ -291,7 +305,14 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
                 List<TileView> player2TilesList = m_TileDictionary.Keys.Where(tile => (int)tile.Owner == currentPlayer).ToList();
                 foreach (TileView tile in player2TilesList)
                 {
-                    tile.SetTileVisibility(_player2Mat);
+                    if (tile == _player2Base)
+                    {
+                        tile.SetTileVisibility(_player2BaseMat);
+                    }
+                    else
+                    {
+                        tile.SetTileVisibility(_player2Mat);
+                    }
                 }
                 break;
         }
