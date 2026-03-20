@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -25,6 +26,7 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
     private List<TileView> _highlightedTiles = new List<TileView>();
     private TileView _selectedTile = null;
+    private UnitView _selectedUnit = null;
 
     private TileView _player1Base = null;
     private TileView _player2Base = null;
@@ -116,6 +118,14 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
         Utils.ColorLog($"Left click on {tile.name} (Owner : {tile.Owner})", "Purple");
 
+        if (_highlightedTiles.Contains(tile) && _selectedUnit != null)
+        {
+            Utils.ColorLog($"Moving unit to {tile.name}", "Green");
+            StartCoroutine(MoveUnitAlongPath(_selectedUnit, _selectedTile, tile));
+            return; // Important : sortir pour ne pas sélectionner une autre unité
+        }
+
+        // Sélection d'une unité
         if (tile.IsOwnedBy(currentPlayer))
         {
             UnitView unit = tile.GetUnitOnTile();
@@ -126,10 +136,11 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
 
                 ShowMovementRange(tile, unit.UnitData.MaxMovement);
                 _selectedTile = tile;
+                _selectedUnit = unit;
             }
             else
             {
-                Utils.ColorLog($"Not unit on this tile", "Yellow");
+                Utils.ColorLog($"No unit on this tile", "Yellow");
                 ClearHighlight();
             }
         }
@@ -138,6 +149,114 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
             Utils.ColorLog($"Not Player {currentPlayer} tile", "Red");
             ClearHighlight();
         }
+    }
+
+    private void HandleTileRightClick(TileView tile, int mouseButton)
+    {
+        int currentPlayer = _iTurnManagerService.CurrentPlayerID;
+
+        Utils.ColorLog($"Left click on {tile.name} (Owner : {tile.Owner})", "Purple");
+
+        if (tile.IsOwnedBy(currentPlayer))
+        {
+            Utils.ColorLog($"Player {currentPlayer} tile - Opening troop purchase UI", "DarkGreen");
+            //TODO Afficher les déplacement
+        }
+        else
+        {
+            Utils.ColorLog("Cannot buy troops on enemy tile", "Red");
+        }
+    }
+
+    private IEnumerator MoveUnitAlongPath(UnitView unit, TileView startTile, TileView endTile)
+    {
+        List<Vector3> path = CalculatePath(startTile, endTile);
+
+        if (path.Count == 0)
+        {
+            Utils.ErrorLog("No valid path found!");
+            ClearHighlight();
+            yield break;
+        }
+
+        Utils.ColorLog($"Moving through {path.Count} positions", "Cyan");
+
+        float moveSpeed = 5f; // Vitesse de déplacement (unités/seconde)
+
+        foreach (Vector3 targetPos in path)
+        {
+            Vector3 startPos = unit.transform.position;
+            Vector3 endPos = new Vector3(targetPos.x, 0.2f, targetPos.z);
+
+            float distance = Vector3.Distance(startPos, endPos);
+            float duration = distance / moveSpeed;
+            float elapsed = 0f;
+
+            // Interpolation fluide vers la prochaine case
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / duration;
+                unit.transform.position = Vector3.Lerp(startPos, endPos, t);
+                yield return null;
+            }
+
+            // S'assurer qu'on est exactement à la bonne position
+            unit.transform.position = endPos;
+        }
+
+        Utils.ColorLog("Movement complete!", "Green");
+
+        int currentPlayer = _iTurnManagerService.CurrentPlayerID;
+        if (currentPlayer == 1 && endTile.GetOwnerID() != 1)
+        {
+            endTile.SetTile(_player1Mat, TileOwner.Player1);
+        }
+        else if (currentPlayer == 2 && endTile.GetOwnerID() != 2)
+        {
+            endTile.SetTile(_player2Mat, TileOwner.Player2);
+        }
+
+        ClearHighlight();
+    }
+
+    private List<Vector3> CalculatePath(TileView startTile, TileView endTile)
+    {
+        List<Vector3> path = new List<Vector3>();
+
+        if (!m_TileDictionary.ContainsKey(startTile) || !m_TileDictionary.ContainsKey(endTile))
+        {
+            Utils.ErrorLog("Start or end tile not in dictionary!");
+            return path;
+        }
+
+        Vector3 startPos = m_TileDictionary[startTile];
+        Vector3 endPos = m_TileDictionary[endTile];
+        float cellSize = _iGridManagerService.CellSize;
+
+        // Calculer la différence en nombre de cases
+        int diffX = Mathf.RoundToInt((endPos.x - startPos.x) / cellSize);
+        int diffZ = Mathf.RoundToInt((endPos.z - startPos.z) / cellSize);
+
+        Vector3 currentPos = startPos;
+
+        int stepX = diffX > 0 ? 1 : -1;
+        for (int i = 0; i < Mathf.Abs(diffX); i++)
+        {
+            currentPos.x += stepX * cellSize;
+            path.Add(currentPos);
+        }
+
+        int stepZ = diffZ > 0 ? 1 : -1;
+        for (int i = 0; i < Mathf.Abs(diffZ); i++)
+        {
+            currentPos.z += stepZ * cellSize;
+            path.Add(currentPos);
+        }
+
+        Utils.ColorLog($"Path calculated: {path.Count} steps (X: {Mathf.Abs(diffX)}, Z: {Mathf.Abs(diffZ)})", "Yellow");
+
+        return path;
     }
 
     private void ShowMovementRange(TileView centerTile, int maxMovement)
@@ -186,23 +305,6 @@ public class TileManager : MonoBehaviour, IServiceMB, ITileManagerService
         _selectedTile = null;
 
         Utils.ColorLog("Cleared all highlighted tiles", "Yellow");
-    }
-
-    private void HandleTileRightClick(TileView tile, int mouseButton)
-    {
-        int currentPlayer = _iTurnManagerService.CurrentPlayerID;
-
-        Utils.ColorLog($"Left click on {tile.name} (Owner : {tile.Owner})", "Purple");
-
-        if (tile.IsOwnedBy(currentPlayer))
-        {
-            Utils.ColorLog($"Player {currentPlayer} tile - Opening troop purchase UI", "DarkGreen");
-            //TODO Afficher les déplacement
-        }
-        else
-        {
-            Utils.ColorLog("Cannot buy troops on enemy tile", "Red");
-        }
     }
 
     public void SubscribeToTileCheck(Action<TileView> onLeftClick, Action<TileView> onRightClick)

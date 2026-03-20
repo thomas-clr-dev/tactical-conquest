@@ -1194,7 +1194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1217191116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1470,7 +1470,9 @@ MonoBehaviour:
   _tilesContainer: {fileID: 838229371}
   _sandyMat: {fileID: 2100000, guid: 90cbed3e6221db64b842dcb39b454387, type: 2}
   _player1Mat: {fileID: 2100000, guid: 1e6f2098f9402494aae76896dd201cd0, type: 2}
+  _player1BaseMat: {fileID: 2100000, guid: 55bd7f364adab9f4e94db7deab41780f, type: 2}
   _player2Mat: {fileID: 2100000, guid: 539244d3a94995842980527099f72ab3, type: 2}
+  _player2BaseMat: {fileID: 2100000, guid: 5b688104438f08e42b3c7b041f326842, type: 2}
   _movementHighlightMat: {fileID: 2100000, guid: 4da22d631678b374493f978da47c30d4, type: 2}
 --- !u!1 &1753552945
 GameObject:

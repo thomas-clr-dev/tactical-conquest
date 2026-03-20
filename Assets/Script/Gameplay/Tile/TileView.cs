@@ -19,6 +19,8 @@ public class TileView : MonoBehaviour
     private Material _originalMaterial;
     private bool _isHighlighted = false;
 
+    private ITurnManagerService _iTurnManagerService;
+
     private void Awake()
     {
         tileRenderer = gameObject.GetComponent<Renderer>();
@@ -26,6 +28,11 @@ public class TileView : MonoBehaviour
         {
             _originalMaterial = tileRenderer.material;
         }
+    }
+
+    private void Start()
+    {
+        _iTurnManagerService = ServiceLocator.Get<ITurnManagerService>();
     }
 
     public void TriggerLeftClick()
@@ -42,7 +49,14 @@ public class TileView : MonoBehaviour
     {
         if (tileRenderer != null && !_isHighlighted)
         {
-            tileRenderer.material = highlightMat;
+            if (_iTurnManagerService != null && (int)Owner == _iTurnManagerService.CurrentPlayerID)
+            {
+                tileRenderer.material = _originalMaterial;
+            }
+            else
+            {
+                tileRenderer.material = highlightMat;
+            }
             _isHighlighted = true;
         }
     }
