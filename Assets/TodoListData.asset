@@ -107,7 +107,7 @@ MonoBehaviour:
   - id: be44408a-76ad-4b19-8b90-c24062baf83c
     title: "G\xE9rer move unit\xE9"
     description: 
-    isCompleted: 0
+    isCompleted: 1
     priority: 1
     category: General
     collaborator: "Non assign\xE9"
@@ -125,7 +125,7 @@ MonoBehaviour:
   - id: 6ca06a8e-e616-4e9e-93f6-9322983c362a
     title: "G\xE9rer conqu\xEAte tile"
     description: 
-    isCompleted: 0
+    isCompleted: 1
     priority: 1
     category: General
     collaborator: "Non assign\xE9"

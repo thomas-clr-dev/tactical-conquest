@@ -4,7 +4,7 @@ using UnityEngine;
 public class UnitData : ScriptableObject
 {
     [Header("Unit Info")]
-    public int UnitOwner;
+    //public int UnitOwner;
     public string UnitName;
 
     [Header("Unit Stats")]

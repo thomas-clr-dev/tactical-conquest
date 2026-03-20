@@ -45,7 +45,7 @@ public class EconomyManager : MonoBehaviour, IServiceMB, IEconomyManagerService
         int currentPlayer = _iTurnManagerService.CurrentPlayerID;
         int previousPLayer = currentPlayer == 1 ? 2 : 1;
 
-        int conqueredTiles = _iTileManagerService.GetConqueredTileCount(currentPlayer);
+        int conqueredTiles = _iTileManagerService.GetConqueredTileCount(previousPLayer);
 
         if (previousPLayer == 1)
         {

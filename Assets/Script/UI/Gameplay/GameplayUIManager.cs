@@ -58,6 +58,7 @@ public class GameplayUIManager : MonoBehaviour, IServiceMB, IGameplayUIManagerSe
 
             _iTurnManagerService.OnTurnChanged += UpdateUI;
             _iUnitManagerService.OnUnitsGenerated += UpdateUI;
+
         }
         else
         {

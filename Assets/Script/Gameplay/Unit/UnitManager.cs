@@ -12,6 +12,7 @@ public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
     private List<UnitView> _allUnits = new List<UnitView>();
 
     public event Action OnUnitsGenerated;
+    public event Action<UnitData> OnTroopBought;
 
     public Transform Player1TroopsContainer;
     public Transform Player2TroopsContainer;
@@ -129,6 +130,44 @@ public class UnitManager : MonoBehaviour, IServiceMB, IUnitManagerService
         Utils.ColorLog($"Unit added to tracking: {unitView.gameObject.name} (Total: {_allUnits.Count})", "Green");
 
         OnUnitsGenerated?.Invoke();
+    }
+
+    public void AddTroop(int playerId, TileView tile, UnitData unitData)
+    {
+        Transform parentContainer = playerId == 1 ? Player1TroopsContainer : Player2TroopsContainer;
+
+        Vector3 tilePos = tile.transform.position;
+
+        Vector3 unitPos = new Vector3(tilePos.x, tilePos.y + 0.2f, tilePos.z);
+
+        GameObject unitAdded = Instantiate(
+            unitData.PrefabModel,
+            unitPos,
+            Quaternion.identity,
+            parentContainer
+        );
+
+        UnitView unitView = unitAdded.GetComponent<UnitView>();
+        if (unitView == null)
+        {
+            unitView = unitAdded.AddComponent<UnitView>();
+        }
+
+        unitView.Initialize(playerId, unitData);
+
+        if (_playerService != null)
+        {
+            Color playerColor = _playerService.GetPlayerColor(playerId);
+            unitView.SetPlayerColor(playerColor);
+        }
+
+        _allUnits.Add(unitView);
+
+        unitView.OnUnitDestroyed += RemoveUnit;
+
+        Utils.ColorLog($"Unit added to tracking for player {playerId}", "Teal");
+
+        OnTroopBought?.Invoke(unitData);
     }
 
     private void OnDestroy()
