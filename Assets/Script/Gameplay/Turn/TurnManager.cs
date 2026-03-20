@@ -8,14 +8,13 @@ public class TurnManager : MonoBehaviour, IServiceMB, ITurnManagerService
 
     public event Action OnTurnChanged;
 
-    private void Awake()
-    {
-        Register();
-    }
-
     private void Start()
     {
-        Utils.ColorLog($"Game Begin ! Player {CurrentPlayerID}, it's your turn ({TurnNumber}) ");
+        BootstrapManager.OnGameReady += OnGameReady;
+    }
+    private void OnGameReady()
+    {
+        // Logique de démarrage ici si nécessaire
     }
 
     public void Register()
@@ -37,9 +36,12 @@ public class TurnManager : MonoBehaviour, IServiceMB, ITurnManagerService
             TurnNumber++;
         }
 
-        Utils.ColorLog($"Turn change ! Player {CurrentPlayerID}, it's your turn ({TurnNumber}) ");
-
         OnTurnChanged?.Invoke();
     }
 
+    private void OnDestroy()
+    {
+        BootstrapManager.OnGameReady -= OnGameReady;
+        Unregister();
+    }
 }

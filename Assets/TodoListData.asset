@@ -35,7 +35,7 @@ MonoBehaviour:
   - id: a0b999ad-3a45-4fb9-81a4-92f37ddd5cb3
     title: "Cr\xE9er un Unitmanager et son service"
     description: 
-    isCompleted: 0
+    isCompleted: 1
     priority: 1
     category: General
     collaborator: Thomas
@@ -49,6 +49,96 @@ MonoBehaviour:
     category: Bug
     collaborator: Thomas
     createdDate: 13/03/2026 14:57
+    dueDate: 
+  - id: c40345f9-7a1a-4cab-b9c0-4e4b1a504eb7
+    title: "R\xE9gler probl\xE8me Crash Editor"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 17/03/2026 16:41
+    dueDate: 
+  - id: daed551b-b961-4429-bfd0-16e5c3dd7008
+    title: "G\xE9rer le scpawn des unit\xE9 de d\xE9part"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 17/03/2026 16:42
+    dueDate: 
+  - id: 78e09def-3adf-46d8-b5a8-dffc05c8a544
+    title: "G\xE9rer le clic sur les tile \xE0 travers UI et Units"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 17/03/2026 16:42
+    dueDate: 
+  - id: acc44230-a9da-44ac-90fe-2101308bc3fe
+    title: "G\xE9rer le syst\xE8me d'\xE9conomie"
+    description: "Faire en sorte d'avoir 1 gold par case occup\xE9"
+    isCompleted: 1
+    priority: 1
+    category: Feature
+    collaborator: "Non assign\xE9"
+    createdDate: 18/03/2026 12:16
+    dueDate: 
+  - id: 591c3808-25c3-47b7-8900-b6301419c81e
+    title: "Compt\xE9 le nombre de case conquise par le joueur"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 18/03/2026 12:47
+    dueDate: 
+  - id: 7226505b-7469-49d4-ac76-e804e41c7750
+    title: "Cr\xE9er un wallet par joueur"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 18/03/2026 12:56
+    dueDate: 
+  - id: be44408a-76ad-4b19-8b90-c24062baf83c
+    title: "G\xE9rer move unit\xE9"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 20/03/2026 13:21
+    dueDate: 
+  - id: be464e2a-feb2-467f-9291-e33768f24c3f
+    title: "G\xE9rer achat troupe"
+    description: 
+    isCompleted: 0
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 20/03/2026 13:21
+    dueDate: 
+  - id: 6ca06a8e-e616-4e9e-93f6-9322983c362a
+    title: "G\xE9rer conqu\xEAte tile"
+    description: 
+    isCompleted: 1
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 20/03/2026 13:21
+    dueDate: 
+  - id: 21d8b9cc-e6bd-426d-8978-c3301f360b71
+    title: "G\xE9rer Merge unit\xE9s"
+    description: 
+    isCompleted: 0
+    priority: 1
+    category: General
+    collaborator: "Non assign\xE9"
+    createdDate: 20/03/2026 13:22
     dueDate: 
   collaborators:
   - "Non assign\xE9"

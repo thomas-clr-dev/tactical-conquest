@@ -1,0 +1,6 @@
+﻿<Solution>
+  <Project Path="Aehenginn.Vhrtztodolist.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Aehenginn.Vhrtztodolist.Editor.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+</Solution>

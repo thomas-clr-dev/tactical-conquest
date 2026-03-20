@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using System;
 
 public enum TileOwner
 {
@@ -12,11 +12,62 @@ public class TileView : MonoBehaviour
 {
     public TileOwner Owner = TileOwner.Neutral;
 
+    public event Action<TileView, int> OnTileLeftClicked;
+    public event Action<TileView, int> OnTileRightClicked;
+
     private Renderer tileRenderer;
+    private Material _originalMaterial;
+    private bool _isHighlighted = false;
+
+    private ITurnManagerService _iTurnManagerService;
 
     private void Awake()
     {
         tileRenderer = gameObject.GetComponent<Renderer>();
+        if (tileRenderer != null )
+        {
+            _originalMaterial = tileRenderer.material;
+        }
+    }
+
+    private void Start()
+    {
+        _iTurnManagerService = ServiceLocator.Get<ITurnManagerService>();
+    }
+
+    public void TriggerLeftClick()
+    {
+        OnTileLeftClicked?.Invoke(this, 0);
+    }
+
+    public void TriggerRightClick()
+    {
+        OnTileRightClicked?.Invoke(this, 1);
+    }
+
+    public void Highlight(Material highlightMat)
+    {
+        if (tileRenderer != null && !_isHighlighted)
+        {
+            if (_iTurnManagerService != null && (int)Owner == _iTurnManagerService.CurrentPlayerID)
+            {
+                tileRenderer.material = _originalMaterial;
+            }
+            else
+            {
+                tileRenderer.material = highlightMat;
+            }
+            _isHighlighted = true;
+        }
+    }
+
+    public void RemoveHighlight()
+    {
+        if (tileRenderer != null && _isHighlighted)
+        {
+            tileRenderer.material = _originalMaterial;
+            _isHighlighted = false;
+        }
     }
 
     public void SetTile(Material tileMat, TileOwner newTileOwner)
@@ -24,6 +75,7 @@ public class TileView : MonoBehaviour
         if (tileMat != null)
         {
             tileRenderer.material = tileMat;
+            _originalMaterial = tileMat;
         }
 
         switch (newTileOwner)
@@ -43,7 +95,8 @@ public class TileView : MonoBehaviour
     {
         if (mat != null)
         {
-            tileRenderer.material = mat; 
+            tileRenderer.material = mat;
+            _originalMaterial = mat;
         }
     }
 
@@ -60,5 +113,21 @@ public class TileView : MonoBehaviour
     public bool IsOwnedBy(int playerID)
     {
         return (int)Owner == playerID;
+    }
+
+    public UnitView GetUnitOnTile()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f, LayerMask.GetMask("Units"));
+
+        foreach (var collider in colliders)
+        {
+            UnitView unit = collider.GetComponent<UnitView>();
+            if (unit != null)
+            {
+                return unit; 
+            }
+        }
+
+        return null;
     }
 }

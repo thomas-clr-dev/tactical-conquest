@@ -10,9 +10,13 @@ public class GridManager : MonoBehaviour, IServiceMB, IGridManagerService
     [SerializeField] private int _gridLengthX = 10;
     [SerializeField] private int _gridLengthY = 10;
 
+    float IGridManagerService.CellSize => CellSize;
+
+    public event Action OnGridGenerated;
+
     private void Awake()
     {
-        Register();
+        // Ne plus s'auto-register
         _gridSize = new int[_gridLengthX, _gridLengthY];
     }
 
@@ -37,5 +41,10 @@ public class GridManager : MonoBehaviour, IServiceMB, IGridManagerService
         }
         ServiceLocator.Get<ITileManagerService>().SetPlayerBase(_gridLengthX, _gridLengthY, CellSize);
         ServiceLocator.Get<ICameraManagerService>().SetCameraPositionFromGrid(_gridLengthX, _gridLengthX, CellSize);
+        OnGridGenerated?.Invoke();
+    }
+    private void OnDestroy()
+    {
+        Unregister();
     }
 }
